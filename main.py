@@ -37,7 +37,7 @@ def relatorio_inicial():
     print(f'Nivel de At. Física: {fatoratv}')
 
 def relatorio_final():
-    print(f'{' RELATÓRIO FINAL ':-^60}')
+    print(f'{' RELATÓRIO FINAL ':=^60}')
     print(f'Nome: {nome}')
     print(f'Sexo: {'Masculino' if sexo == 'M' else 'Feminino'}')
     print(f'Idade: {idade} anos')
@@ -49,7 +49,7 @@ def relatorio_final():
     print(f'O EER calculado é de {eer:.2f} kcal por dia.')
     if estado in ('SOBREPESO', 'OBESIDADE GRAU I', 'OBESIDADE GRAU II (SEVERA)', 'OBESIDADE GRAU III (MÓRBIDA)'):
         print(f"Estimativa de ajuste calórico: aproximadamente {eer - 500:.0f} kcal/dia.\npara PERDA de peso.")
-    elif estado in 'ABAIXO DO PESO':
+    elif estado == 'ABAIXO DO PESO':
         print(f"Estimativa de ajuste calórico: aproximadamente {eer + 500:.0f} kcal/dia.\npara GANHO de peso.")
     else:
         if objetivo == 'GANHAR':
@@ -60,7 +60,7 @@ def relatorio_final():
             print(f"Estimativa de ajuste calórico: aproximadamente {eer - 500:.0f} kcal/dia.\npara PERDER o peso.")
     print('-'*60)
     recomendação(estado)
-    print('-'*60)
+    print('='*60)
 
 def recomendação(resultado):
     if resultado == 'ABAIXO DO PESO':
@@ -76,74 +76,84 @@ def recomendação(resultado):
     else:
         print('Procure acompanhamento médico e nutricional para uma avaliação \nindividualizada e segura.')
 
-print('-='*30)
-print(f'{' CALCULADORA NUTRICIONAL ':-^60}')
-print('-='*30)
+while True:
+    print('-='*30)
+    print(f'{' CALCULADORA NUTRICIONAL ':-^60}')
+    print('-='*30)
 
-nome = str(input('Digite o seu nome: ')).strip().title()
-sexo = str(input('Qual seu sexo? [M/F] ')).strip().upper()[0]
-idade = int(input('Qual a sua idade? '))
-peso = float(input('Digite seu peso em kg: '))
-altura = float(input('Digite sua altura em metros: '))
+    nome = str(input('Digite o seu nome: ')).strip().title()
+    sexo = str(input('Qual seu sexo? [M/F] ')).strip().upper()[0]
+    idade = int(input('Qual a sua idade? '))
+    peso = float(input('Digite seu peso em kg: '))
+    altura = float(input('Digite sua altura em metros: '))
 
-# FA -> FATOR ATIVIDADE
-respfa = fa = 0
-fatoratv = ''
-print('-'*60)
-while respfa not in (1, 2, 3, 4):
-    respfa = int(input('''Informe qual o seu Fator Atividade:
-    [1] Sedentário
-    [2] Pouco Ativo
-    [3] Ativo
-    [4] Muito Ativo
-    Digite aqui: '''))
-    if respfa == 1:
-        fatoratv = 'Sedentário'
-        fa = 1.0
-        break
-    elif respfa == 2:
-        fatoratv = 'Pouco Ativo'
-        fa = 1.11
-        break
-    elif respfa == 3:
-        fatoratv = 'Ativo'
-        if sexo == 'M':
-            fa = 1.25
-            break
+    # FA -> FATOR ATIVIDADE
+    respfa = fa = 0
+    fatoratv = ''
+    print('-'*60)
+    while respfa not in (1, 2, 3, 4):
+        respfa = int(input('''Informe qual o seu Fator Atividade:
+        [1] Sedentário
+        [2] Pouco Ativo
+        [3] Ativo
+        [4] Muito Ativo
+        Digite aqui: '''))
+        if respfa == 1:
+            fatoratv = 'Sedentário'
+            fa = 1.0
+            
+        elif respfa == 2:
+            fatoratv = 'Pouco Ativo'
+            fa = 1.11
+            
+        elif respfa == 3:
+            fatoratv = 'Ativo'
+            if sexo == 'M':
+                fa = 1.25
+                
+            else:
+                fa = 1.27
+                
+        elif respfa == 4:
+            fatoratv = 'Muito ativo'
+            if sexo == 'M':
+                fa = 1.48
+                
+            else:
+                fa = 1.45
+                
         else:
-            fa = 1.27
-            break
-    elif respfa == 4:
-        fatoratv = 'Muito ativo'
-        if sexo == 'M':
-            fa = 1.48
-            break
-        else:
-            fa = 1.45
-            break
-    else:
-        print('Não foi possível identificar. Tente novamente!')
-        print('-'*60)
+            print('Não foi possível identificar. Tente novamente!')
+            print('-'*60)
 
-escolha = 'nula'
-print('-'*60)
-while escolha not in ('1','2','3'):
-    escolha = str(input('''Qual o seu objetivo?
-    [1] Ganhar peso/massa
-    [2] Manter peso/massa
-    [3] Perder peso/massa
-    Digite aqui: '''))
-    if escolha == '1':
-        objetivo = 'GANHAR'
-    elif escolha == '2':
-        objetivo = 'MANTER'
-    elif escolha == '3':
-        objetivo = 'PERDER'
-    else:
-        print('Resposta inválida, tente outra vez.')
-        print('-'*60)
-        
-imc = calcular_imc(peso, altura)
-eer = calcular_eer(sexo, idade, peso, altura, fa)
-estado = verificacao_imc(imc)
-relatorio_final()
+    escolha = 'nula'
+    print('-'*60)
+    while escolha not in ('1','2','3'):
+        escolha = str(input('''Qual o seu objetivo?
+        [1] Ganhar peso/massa
+        [2] Manter peso/massa
+        [3] Perder peso/massa
+        Digite aqui: '''))
+        if escolha == '1':
+            objetivo = 'GANHAR'
+        elif escolha == '2':
+            objetivo = 'MANTER'
+        elif escolha == '3':
+            objetivo = 'PERDER'
+        else:
+            print('Resposta inválida, tente outra vez.')
+            print('-'*60)
+            
+    imc = calcular_imc(peso, altura)
+    eer = calcular_eer(sexo, idade, peso, altura, fa)
+    estado = verificacao_imc(imc)
+    relatorio_final()
+
+    continuar = 'nulo'
+    while continuar not in ('S', 'N'):
+        continuar = str(input('Deseja fazer outro cálculo? [S/N] ')).upper().strip()[0]
+        if continuar not in ('S', 'N'):
+            print('Resposta inválida. Tente outra vez!')
+    if continuar == 'N':
+        break
+print(f'{' PROGRAMA ENCERRADO ':/^60}')
