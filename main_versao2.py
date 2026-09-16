@@ -37,30 +37,30 @@ def calcular_eer2(sexo, idade, peso, altura, fatoratv):
         if sexo == 'M':
             # FÓRMULA MASCULINA
             if fatoratv == 'Sedentário':
-                eer = -447.51 + (3.68 * idade) + (13.01 * altura) + (13.15 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 25)
+                eer = -447.51 + (3.68 * idade) + (13.01 * altura) + (13.15 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 25)
                 return eer
             elif fatoratv == 'Pouco Ativo':
-                eer = 19.12 + (3.68 * idade) + (8.62 * altura) + (20.28 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 25)
+                eer = 19.12 + (3.68 * idade) + (8.62 * altura) + (20.28 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 25)
                 return eer
-            elif fatoratv == 'Pouco Ativo':
-                eer = -388.19 + (3.68 * idade) + (12.66 * altura) + (20.46 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 25)
+            elif fatoratv == 'Ativo':
+                eer = -388.19 + (3.68 * idade) + (12.66 * altura) + (20.46 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 25)
                 return eer
             else:
-                eer = -671.75 + (3.68 * idade) + (15.68 * altura) + (23.25 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 25)
+                eer = -671.75 + (3.68 * idade) + (15.68 * altura) + (23.25 * peso) + (20 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 25)
                 return eer
         else:
             # FÓRMULA FEMININA
             if fatoratv == 'Sedentário':
-                eer = 55.69 - (22.25 * idade) + (8.43 * altura) + (17.07 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 30)
+                eer = 55.69 - (22.25 * idade) + (8.43 * altura) + (17.07 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 30)
                 return eer
             elif fatoratv == 'Pouco Ativo':
-                eer = -297.54 - (22.25 * idade) + (12.77 * altura) + (14.73 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 30)
+                eer = -297.54 - (22.25 * idade) + (12.77 * altura) + (14.73 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 30)
                 return eer
-            elif fatoratv == 'Pouco Ativo':
-                eer = -189.55 - (22.25 * idade) + (11.74 * altura) + (18.34 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 30)
+            elif fatoratv == 'Ativo':
+                eer = -189.55 - (22.25 * idade) + (11.74 * altura) + (18.34 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 30)
                 return eer
             else:
-                eer = -709.59 - (22.25 * idade) + (18.22 * altura) + (14.25 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 18 else 30)
+                eer = -709.59 - (22.25 * idade) + (18.22 * altura) + (14.25 * peso) + (15 if 3 <= idade < 4 else 15 if 4 <= idade < 9 else 30)
                 return eer
      
     elif 14 <= idade < 19:
@@ -73,7 +73,7 @@ def calcular_eer2(sexo, idade, peso, altura, fatoratv):
             elif fatoratv == 'Pouco Ativo':
                 eer = 19.12 + (3.68 * idade) + (8.62 * altura) + (20.28 * peso) + 20
                 return eer
-            elif fatoratv == 'Pouco Ativo':
+            elif fatoratv == 'Ativo':
                 eer = -388.19 + (3.68 * idade) + (12.66 * altura) + (20.46 * peso) + 20
                 return eer
             else:
@@ -87,7 +87,7 @@ def calcular_eer2(sexo, idade, peso, altura, fatoratv):
             elif fatoratv == 'Pouco Ativo':
                 eer = -297.54 - (22.25 * idade) + (12.77 * altura) + (14.73 * peso) + 20
                 return eer
-            elif fatoratv == 'Pouco Ativo':
+            elif fatoratv == 'Ativo':
                 eer = -189.55 - (22.25 * idade) + (11.74 * altura) + (18.34 * peso) + 20
                 return eer
             else:
@@ -125,23 +125,31 @@ def calcular_eer2(sexo, idade, peso, altura, fatoratv):
                 eer = 511.83 - (7.01 * idade) + (12.56 * peso) + (9.07 * altura)
                 return(eer)
 
-def relatorio_inicial():
+def carregamento():
+    for i in range(2):
+        for pontos in range(4):
+            print(f"\rCarregando{'.' * pontos}   ", end='', flush=True)
+            sleep(0.3)
+    print("\rCarregado!     ")
+
+def relatorio_dados_iniciais():
     print(f'{' DADOS INICIAIS ':-^60}')
     print(f'Nome: {nome}')
     print(f'Sexo: {'Masculino' if sexo == 'M' else 'Feminino'}')
     print(f'Idade: {idade}')
-    print(f'Altura: {altura:.2f}m')
+    print(f'Altura: {altura}cm / {altura/100:.2f}m')
     print(f'Peso: {peso:.1f}kg')
     print(f'Nivel de At. Física: {fatoratv}')
 
 def relatorio_final():
     print(f'{' RELATÓRIO FINAL ':=^60}')
-    print(f'Nome: {nome}')
+    relatorio_dados_iniciais()
+    '''print(f'Nome: {nome}')
     print(f'Sexo: {'Masculino' if sexo == 'M' else 'Feminino'}')
     print(f'Idade: {idade} anos')
     print(f'Altura: {altura}cm / {altura/100:.2f}m')
     print(f'Peso: {peso:.1f}kg')
-    print(f'Nivel de At. Física: {fatoratv}')
+    print(f'Nivel de At. Física: {fatoratv}')'''
     print('-'*60)
     print(f'O seu Índice de massa corporal é de {imc:.2f}kg/m², o que indica \nque você no momento está em {estado}.')
     print(f'O EER calculado é de {eer:.2f} kcal por dia.')
@@ -249,7 +257,5 @@ while True:
     if continuar == 'N':
         break
     else:
-        print('-'*60)
-        print('Carregando...')
-        sleep(1.5)
+        carregamento()
 print(f'{' PROGRAMA ENCERRADO ':/^60}')
